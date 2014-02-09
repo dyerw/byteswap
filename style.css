@@ -10,6 +10,12 @@ body {
     margin-right: auto;
 }
 
+#file_list {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 form {
     color: white;
 }
