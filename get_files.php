@@ -16,10 +16,12 @@ $iterator = $client->getIterator('ListObjects', array(
     'Bucket' => 'FileHotel'
 ));
 
-echo "<p>";
+$color_class = array("class=\"red\"","class=\"yellow\"","class=\"blue\"");
+$ind = 0;
 foreach ($iterator as $object) {
-    echo $object['Key'] . " ";
+    echo "<p " . $color_class[$ind] . ">" . $object['Key'] . "</p>";
+    $ind++;
+    if ($ind == count($color_class)){
+        $ind = 0;
+    }
 }
-echo "</p>";
-
-echo "<p>Done</p>";

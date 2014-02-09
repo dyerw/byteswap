@@ -16,6 +16,17 @@ body {
     margin-right: auto;
 }
 
+.red {
+    color: red;
+}
+.yellow {
+    color: yellow;
+}
+
+.blue {
+    color: blue;
+}
+
 form {
     color: white;
 }

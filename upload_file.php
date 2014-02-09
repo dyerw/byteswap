@@ -34,6 +34,7 @@ if ($_FILES['upload_file']['error'] > 0) {
     //Put file into S3 bucket
     $client->putObject(array(
         'Bucket' => 'FileHotel',
+        // TODO: prepend unique id to key to prevent overwrites
         'Key' => $file_name,
         'SourceFile' => $tmp_file_path
     ));
