@@ -13,7 +13,7 @@
         <p>
             Here's what to do: 1. upload a file 2. get a random file someone else uploaded
         </p>
-        <form action="upload_file.php" method="post" enctype="multipart/form-data">
+        <form name="upload_form" action="upload_file.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             <input type="file" name="upload_file" id="upload_field"><br>
             <label for="msg_field">What is this?</label>
             <input type="text" name="upload_msg" id="msg_field"><br>
