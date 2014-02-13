@@ -36,7 +36,6 @@ if ($_FILES['upload_file']['error'] > 0) {
     //Put file into S3 bucket
     $client->putObject(array(
         'Bucket' => 'FileHotel',
-        // TODO: prepend unique id to key to prevent overwrites
         'Key' => $unique_id.".".$file_name,
         'SourceFile' => $tmp_file_path,
         'ContentType' => $file_type
@@ -45,39 +44,8 @@ if ($_FILES['upload_file']['error'] > 0) {
     //Store the user message in the csv file
     file_put_contents("./messages.csv", "\n".$unique_id.",".$usr_msg, $flag=FILE_APPEND);
 
-    /*
-     * This downloads a file randomly from the S3 bucket
-     * TODO: this should probably be separate from the upload
-     */
 
-    // get an iterator for all the objects in the bucket
-    $iterator = $client->getIterator('ListObjects', array(
-        'Bucket' => 'FileHotel'
-    ));
+    header('Location: http://liamdyer.com/uploadsite/download_page.html');
+    exit();
 
-    // put items in a list by index
-    $keys_list = array();
-    foreach ($iterator as $object){
-        $keys_list[] = $object['Key'];
-    }
-
-    $rand_index = rand(0, count($keys_list) - 1);
-    $key = $keys_list[$rand_index];
-
-    $signedUrl = $client->getObjectUrl('FileHotel', $key, '+1 minutes');
-    // get content type
-    $head_array = $client->headObject(array(
-        'Bucket' => 'FileHotel',
-        'Key' => $key
-    ));
-    $download_type = $head_array['ContentType'];
-
-    //Download a file for the user
-    header("Content-Transfer-Encoding: Binary");
-    $real_file_name =  explode(".", $key); //strip the unique id
-    header("Content-Type: ".$download_type);
-    header("Content-disposition: attachment; filename=\"" . $real_file_name[1] . "\"");
-    ob_clean();
-    flush();
-    readfile($signedUrl);
 }
